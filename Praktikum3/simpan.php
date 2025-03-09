@@ -19,19 +19,25 @@
   isset($_POST["homepage"]) ? fputs($handler, $_POST["homepage"] . "\n") : fputs($handler, "-\n");
   isset($_POST["hobi"]) ? fputs($handler, $_POST["hobi"] . "\n") : fputs($handler, "-\n");
 
-  $interest = "";
-  foreach($_POST["interest"] as $str)
-  {
-    $interest .= "{$str}, ";
+  if(isset($_POST["interest"])) {
+    $interest = "";
+    foreach($_POST["interest"] as $str) {
+      $interest .= "{$str}, ";
+    }
+    fputs($handler, "{$interest}\n");
   }
-  $interest != "" ? fputs($handler, "{$interest}\n") : fputs($handler, "-\n");
+  else fputs($handler, "-\n");
 
-  fputs($handler, "------------------\n");
+  if (isset($_POST["nama"])) {
+    echo "Halo, " . $_POST["nama"] . "! Data Anda telah disimpan!";
+  } 
+  else echo "Data gagal disimpan!";
 
-  echo "Halo, " . $_POST["nama"] . "! Data Anda telah disimpan!";
   fclose($handler);
   ?>
   <br>
-  <input type="reset" name="back" value="Back" onclick="window.location.href='no1.php'">
+  <br>
+  <a href="form.php"><input type="reset" value="Kembali ke Form"></a>
+  <a href="read.php"><input type="submit" value="Tampilkan Data"></a>
 </body>
 </html>

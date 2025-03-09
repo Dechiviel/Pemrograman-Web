@@ -7,6 +7,9 @@
 
   while (!feof($handler)) {
     $line = trim(fgets($handler)); // menghapus pemisah baris
+    if ($line == "") {
+      continue;
+    }
 
     $nama = trim(fgets($handler));
     $nrp = trim(fgets($handler));
@@ -24,10 +27,8 @@
     $homepage = trim(fgets($handler));
     $hobi = trim(fgets($handler));
     $interest = trim(fgets($handler));
-
-    $line = trim(fgets($handler)); // menghapus pemisah baris
     
-    echo "<br>Data ke-$no<br>";
+    echo "Data ke-$no<br>";
     echo "Nama : $nama<br>";
     echo "NRP : $nrp<br>";
     echo "Kelas : $kelas<br>";
@@ -41,7 +42,7 @@
     echo "Email : $email<br>";
     echo "Homepage : $homepage<br>";
     echo "Hobi : $hobi<br>";
-    echo "Interest : $interest";
+    echo "Interest : $interest<br><br>";
 
     $no++;
 
