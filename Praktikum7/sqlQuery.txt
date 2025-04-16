@@ -1,0 +1,20 @@
+CREATE TABLE data_user (
+    id_data_user INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    nama VARCHAR(50),
+    nrp VARCHAR(10),
+    kelas VARCHAR(20),
+    kelamin VARCHAR(20),
+    agama VARCHAR(20),
+    tempat_lahir VARCHAR(20),
+    tanggal_lahir DATE,
+    alamat VARCHAR(100),
+    riwayat_pendidikan_sd VARCHAR(50),
+    riwayat_pendidikan_smp VARCHAR(50),
+    riwayat_pendidikan_sma VARCHAR(50),
+    email VARCHAR(50),
+    homepage VARCHAR(50),
+    hobby VARCHAR(50),
+    interest VARCHAR(50)
+);
+
+Select * from data_user
