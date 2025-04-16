@@ -17,7 +17,7 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
 }
 ?>
 <!DOCTYPE html>
-<html lang="id">  
+<html lang="id">
 
 <head>
   <meta charset="UTF-8">
@@ -36,8 +36,8 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
       display: flex;
       align-items: center;
       justify-content: center;
-      height: 100vh;
       margin: 0;
+      min-height: 100vh;
     }
 
     .container {
@@ -51,17 +51,64 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
 
     .container h2 {
       text-align: center;
-      margin-bottom: 24px;
+      margin-bottom: 15px;
       color: rgb(50, 50, 50);
     }
 
-    input.username,
-    input.password {
+    .username,
+    .password {
+      position: relative;
+    }
+
+    .usernameinput,
+    .passwordinput {
       width: 100%;
+      height: 40px;
       padding: 12px;
       margin: 8px 0 16px;
       border: 1px solid rgb(84, 84, 84);
       border-radius: 8px;
+      box-sizing: border-box;
+      font-size: 16px;
+      -webkit-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
+
+    .placeholder1,
+    .placeholder2 {
+      position: absolute;
+      top: 19px;
+      left: 10px;
+      color: grey;
+      background-color: white;
+      padding: 0 4px;
+      transition: 0.1s ease all;
+      pointer-events: none;
+      font-size: 16px;
+      line-height: 18px;
+      border-radius: 20px;
+    }
+
+    .usernameinput:focus,
+    .passwordinput:focus {
+      outline: none;
+      border: 1px solid blue;
+    }
+
+    .usernameinput:focus~.placeholder1,
+    .passwordinput:focus~.placeholder2 {
+      top: -1px;
+      left: 8px;
+      font-size: 12px;
+      color: blueviolet;
+    }
+
+    .usernameinput:valid~.placeholder1,
+    .passwordinput:valid~.placeholder2 {
+      top: -1px;
+      left: 8px;
+      font-size: 12px;
     }
 
     .login {
@@ -79,6 +126,20 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
       cursor: pointer;
       background-color: rgb(0, 82, 163);
     }
+
+    .register {
+      text-align: center;
+      margin-top: 5px;
+    }
+
+    .register span {
+      color: rgb(20, 122, 255);
+      cursor: pointer;
+    }
+
+    .register span:hover {
+      text-decoration: underline;
+    }
   </style>
 </head>
 
@@ -86,12 +147,19 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
   <div class="container">
     <h2>Login</h2>
     <form method="POST" action="">
-      <input class="username" name="username" type="text" placeholder="Username = Faris Akmal Soehartono" required>
-      <input class="password" name="password" type="password" placeholder="Password = 3124600101" required>
+      <div class="username">
+        <input id="uname" class="usernameinput" name="username" type="text" required>
+        <label class="placeholder1" for="uname">Username</label>
+      </div>
+      <div class="password">
+        <input id="password" class="passwordinput" name="password" type="password" required>
+        <label class="placeholder2" for="password">Password</label>
+      </div>
       <input class="login" type="submit" value="Login">
       <?php if (isset($error)) {
         echo "<p style='color: tomato; text-align: center;'>$error</p>";
       } ?>
+      <div class="register">Don't have an account? <span>Let's register</span></div>
     </form>
   </div>
 </body>

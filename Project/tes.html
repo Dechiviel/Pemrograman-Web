@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .input-wrapper {
+      position: relative;
+      margin: 20px 0;
+    }
+
+    .input-wrapper input {
+      width: 100%;
+      padding: 12px 12px;
+      font-size: 16px;
+      box-sizing: border-box;
+    }
+
+    .input-wrapper label {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      color: #999;
+      background-color: white;
+      padding: 0 4px;
+      transition: 0.2s ease all;
+      pointer-events: none;
+    }
+
+    .input-wrapper input:focus+label,
+    .input-wrapper input:not(:placeholder-shown):valid+label {
+      top: -8px;
+      left: 8px;
+      font-size: 12px;
+      color: #333;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="input-wrapper">
+    <input type="text" id="nama" required />
+    <label for="nama">Nama Lengkap</label>
+  </div>
+</body>
+
+</html>
