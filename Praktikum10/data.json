@@ -12,33 +12,37 @@
     "laki-laki"
   ],
   "agama": [
-    "jawa"
+    "islam"
   ],
   "tempatLahir": [
     "mars"
   ],
   "tanggalLahir": [
-    ""
+    "2025-05-08"
   ],
   "alamat": [
-    ""
+    "Surabaya"
   ],
   "sd": [
-    ""
+    "SD A"
   ],
   "smp": [
-    ""
+    "SMP B"
   ],
   "sma": [
-    ""
+    "SMA C"
   ],
   "email": [
-    ""
+    "drchikafujiwara@gmail.com"
   ],
   "homepage": [
-    ""
+    "https://www.google.co.id/?hl=id"
   ],
   "hobi": [
-    ""
+    "Ngoding"
+  ],
+  "interest": [
+    "sport",
+    "travelling"
   ]
 }

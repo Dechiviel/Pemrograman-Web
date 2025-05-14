@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>CRUD Biodata</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 800px;
+      margin: auto;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    form {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    form label {
+      font-weight: bold;
+    }
+
+    form input,
+    form textarea,
+    form select {
+      width: 100%;
+      padding: 6px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    .full-width {
+      grid-column: span 2;
+    }
+
+    .btn-group {
+      grid-column: span 2;
+      display: flex;
+      gap: 10px;
+      justify-content: flex-end;
+    }
+
+    button {
+      padding: 10px 15px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      opacity: 0.9;
+    }
+
+    .btn-primary {
+      background-color: #007bff;
+      color: #fff;
+    }
+
+    .btn-warning {
+      background-color: #ffc107;
+      color: #000;
+    }
+
+    .btn-danger {
+      background-color: #dc3545;
+      color: #fff;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    th,
+    td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>CRUD Biodata</h1>
+  <form id="bioForm">
+    <input type="hidden" id="id">
+
+    <label for="nama">Nama</label>
+    <input type="text" id="nama" placeholder="Nama" required>
+
+    <label for="nrp">NRP</label>
+    <input type="number" id="nrp" placeholder="NRP" required>
+
+    <label for="kelas">Kelas</label>
+    <input type="text" id="kelas" placeholder="Kelas">
+
+    <label>Jenis Kelamin</label>
+    <select id="kelamin">
+      <option value="laki-laki">Laki-laki</option>
+      <option value="perempuan">Perempuan</option>
+    </select>
+
+    <label for="agama">Agama</label>
+    <input type="text" id="agama" placeholder="Agama">
+
+    <label for="tempatLahir">Tempat Lahir</label>
+    <input type="text" id="tempatLahir" placeholder="Tempat Lahir">
+
+    <label for="tanggalLahir">Tanggal Lahir</label>
+    <input type="date" id="tanggalLahir">
+
+    <label for="alamat" class="full-width">Alamat</label>
+    <textarea id="alamat" rows="2" class="full-width" placeholder="Alamat lengkap"></textarea>
+
+    <label for="sd">SD</label>
+    <input type="text" id="sd" placeholder="Sekolah Dasar">
+
+    <label for="smp">SMP</label>
+    <input type="text" id="smp" placeholder="Sekolah Menengah Pertama">
+
+    <label for="sma">SMA</label>
+    <input type="text" id="sma" placeholder="Sekolah Menengah Atas">
+
+    <label for="email">Email</label>
+    <input type="email" id="email" placeholder="Email">
+
+    <label for="homepage">Homepage</label>
+    <input type="url" id="homepage" placeholder="Homepage">
+
+    <label for="hobi">Hobby</label>
+    <input type="text" id="hobi" placeholder="Hobby">
+
+    <label>Interest</label>
+    <div style="display: flex; gap:10px; flex-direction: row; ">
+      <label><input type="checkbox" value="komputer" class="interest">Komputer</label>
+      <label><input type="checkbox" value="sport" class="interest">Sport</label>
+      <label><input type="checkbox" value="travelling" class="interest">Travelling</label>
+      <label><input type="checkbox" value="writing" class="interest">Writing</label>
+      <label><input type="checkbox" value="reading" class="interest">Reading</label>
+    </div>
+
+    <div class="btn-group">
+      <button type="submit" id="btnSave" class="btn-primary">Create</button>
+      <button type="button" id="btnReset" class="btn-warning">Reset</button>
+    </div>
+  </form>
+
+  <table id="dataTable">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>data</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <script>
+    const form = document.getElementById('bioForm');
+    const fields = ['nama', 'nrp', 'kelas', 'kelamin', 'agama', 'tempatLahir', 'tanggalLahir', 'alamat', 'sd', 'smp', 'sma', 'email', 'homepage', 'hobi'];
+    const idInput = document.getElementById('id');
+    const tableBody = document.querySelector('#dataTable tbody');
+
+    function getFormData() {
+      const data = {};
+      fields.forEach(f => data[f] = document.getElementById(f).value);
+      data.interest = Array.from(document.querySelectorAll('.interest:checked')).map(cb => cb.value);
+      return data;
+    }
+
+    function setFormData(item) {
+      idInput.value = item.id;
+      fields.forEach(f => document.getElementById(f).value = item[f] || '');
+      document.querySelectorAll('.interest').forEach(cb => cb.checked = item.interest?.includes(cb.value));
+      document.getElementById('btnSave').textContent = 'Update';
+    }
+
+    function resetForm() {
+      idInput.value = '';
+      form.reset();
+      document.getElementById('btnSave').textContent = 'Create';
+    }
+
+    async function loadData() {
+      const response = await fetch('/data');
+      const data = await response.json();
+      tableBody.innerHTML = '';
+      data.forEach(item => {
+        const row = document.createElement('tr');
+        row.innerHTML = `<td>${item.id}</td><td>${JSON.stringify(item)}</td>`;
+        row.onclick = () => setFormData(item);
+        const deleteBtn = document.createElement('button');
+        deleteBtn.textContent = 'Delete';
+        deleteBtn.className = 'btn-danger';
+        deleteBtn.onclick = e => {
+          e.stopPropagation();
+          deleteData(item.id);
+        };
+        row.appendChild(deleteBtn);
+        tableBody.appendChild(row);
+      });
+    }
+
+    async function deleteData(id) {
+      await fetch(`/data?id=${id}`, { method: 'DELETE' });
+      loadData();
+    }
+
+    form.onsubmit = async e => {
+      e.preventDefault();
+      const id = idInput.value;
+      const data = getFormData();
+      const opts = {
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      };
+      if (id) {
+        await fetch(`/data?id=${id}`, { ...opts, method: 'PUT' });
+      } else {
+        await fetch('/data', { ...opts, method: 'POST' });
+      }
+      resetForm();
+      loadData();
+    };
+
+    document.getElementById('btnReset').onclick = resetForm;
+
+    // initial load
+    loadData();
+  </script>
+</body>
+
+</html>
